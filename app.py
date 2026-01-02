@@ -136,6 +136,53 @@ def plot_spectrum(frequencies: np.ndarray, magnitude: np.ndarray) -> plt.Figure:
     return fig
 
 
+def plot_spectrogram(sample_rate: int, audio_data: np.ndarray) -> plt.Figure:
+    """
+    スペクトログラムをプロットする。
+    連続音か断続音かを時間軸で視覚的に判断するため。
+    """
+    fig, ax = plt.subplots(figsize=(10, 4))
+    
+    # スペクトログラムを生成
+    # NFFT: FFTの窓サイズ, noverlap: オーバーラップ量
+    spectrum, freqs, times, im = ax.specgram(
+        audio_data,
+        Fs=sample_rate,
+        NFFT=1024,
+        noverlap=512,
+        cmap='plasma',
+        vmin=-80,  # dBの下限
+        vmax=0     # dBの上限
+    )
+    
+    # 3000Hz以下に制限
+    ax.set_ylim(0, 3000)
+    
+    # カラーバー追加
+    cbar = fig.colorbar(im, ax=ax, format='%+2.0f dB')
+    cbar.set_label('Intensity (dB)', color='white')
+    cbar.ax.yaxis.set_tick_params(color='white')
+    plt.setp(plt.getp(cbar.ax.axes, 'yticklabels'), color='white')
+    
+    ax.set_xlabel('Time (sec)', fontsize=12)
+    ax.set_ylabel('Frequency (Hz)', fontsize=12)
+    ax.set_title('Spectrogram - Continuous vs Intermittent Sound', fontsize=14, fontweight='bold')
+    
+    # 背景色を設定
+    ax.set_facecolor('#1E1E1E')
+    fig.patch.set_facecolor('#0E1117')
+    
+    # テキスト色を白に
+    ax.xaxis.label.set_color('white')
+    ax.yaxis.label.set_color('white')
+    ax.title.set_color('white')
+    ax.tick_params(colors='white')
+    for spine in ax.spines.values():
+        spine.set_color('white')
+    
+    plt.tight_layout()
+    return fig
+
 def analyze_with_gemini(audio_bytes: bytes, api_key: str) -> str:
     """
     Gemini 2.5 Flashで音声を解析する。
@@ -322,6 +369,15 @@ def main():
                             st.warning("⚠️ 高周波成分が多めです（狭窄の可能性を示唆）")
                         else:
                             st.info("ℹ️ 混合型のスペクトルです")
+                        
+                        # スペクトログラム表示
+                        st.markdown("---")
+                        st.subheader("スペクトログラム（時間-周波数解析）")
+                        st.caption("💡 連続して色がついていれば「連続音」、途切れていれば「断続音」です")
+                        
+                        fig_spec = plot_spectrogram(sample_rate, waveform)
+                        st.pyplot(fig_spec)
+                        plt.close(fig_spec)
                             
                 except Exception as e:
                     st.error(f"❌ FFT解析エラー: {str(e)}")
