@@ -254,26 +254,8 @@ def main():
     st.markdown('<h1 class="main-title">透析シャント音チェッカー 🩺</h1>', unsafe_allow_html=True)
     st.markdown('<p class="subtitle">Powered by Gemini 2.5 Flash</p>', unsafe_allow_html=True)
     
-    # APIキーチェック（オプション）
+    # APIキー取得（st.secretsから自動取得）
     api_key = get_api_key()
-    
-    # APIキー入力セクション（サイドバー）
-    with st.sidebar:
-        st.subheader("⚙️ 設定")
-        if api_key:
-            st.success("✅ APIキー設定済み")
-        else:
-            st.warning("⚠️ APIキー未設定")
-            st.info("AI診断を使用するにはGoogle API Keyが必要です。")
-            user_key = st.text_input(
-                "Google API Key：",
-                type="password",
-                key="user_api_key_input"
-            )
-            if user_key:
-                st.session_state.user_api_key = user_key
-                st.rerun()
-            st.markdown("[🔗 API Keyを取得](https://aistudio.google.com/app/apikey)")
     
     # インストラクション
     st.markdown("""
