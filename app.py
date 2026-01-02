@@ -294,6 +294,28 @@ def main():
         margin: 1rem 0;
         border-radius: 0 5px 5px 0;
     }
+    /* 録音ボタンを大きく表示 */
+    [data-testid="stAudioInput"] > div {
+        display: flex;
+        justify-content: center;
+    }
+    [data-testid="stAudioInput"] button {
+        width: 120px !important;
+        height: 120px !important;
+        border-radius: 50% !important;
+        background: linear-gradient(135deg, #E63946 0%, #FF6B35 100%) !important;
+        border: 4px solid #fff !important;
+        box-shadow: 0 8px 20px rgba(230, 57, 70, 0.4) !important;
+        transition: transform 0.2s, box-shadow 0.2s !important;
+    }
+    [data-testid="stAudioInput"] button:hover {
+        transform: scale(1.05) !important;
+        box-shadow: 0 12px 30px rgba(230, 57, 70, 0.6) !important;
+    }
+    [data-testid="stAudioInput"] button svg {
+        width: 50px !important;
+        height: 50px !important;
+    }
     </style>
     """, unsafe_allow_html=True)
     
