@@ -8,10 +8,16 @@ import os
 from typing import Optional, Tuple
 
 import matplotlib.pyplot as plt
+import matplotlib
 import numpy as np
 import scipy.io.wavfile as wavfile
 import streamlit as st
 from dotenv import load_dotenv
+
+# 日本語フォント設定（文字化け対策）
+# Windows/Mac/Linux対応
+matplotlib.rcParams['font.family'] = ['DejaVu Sans', 'Hiragino Sans', 'Yu Gothic', 'Meiryo', 'MS Gothic', 'sans-serif']
+matplotlib.rcParams['axes.unicode_minus'] = False
 
 # 環境変数の読み込み
 load_dotenv()
