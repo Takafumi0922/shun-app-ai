@@ -108,13 +108,13 @@ def plot_spectrum(frequencies: np.ndarray, magnitude: np.ndarray) -> plt.Figure:
     ax.plot(freq_filtered, mag_normalized, color='#E63946', linewidth=1.5)
     
     # 周波数帯域の目安を表示
-    ax.axvline(x=500, color='#2A9D8F', linestyle='--', alpha=0.5, label='正常帯域上限目安')
-    ax.axvline(x=1000, color='#E9C46A', linestyle='--', alpha=0.5, label='注意帯域')
-    ax.axvline(x=2000, color='#F4A261', linestyle='--', alpha=0.5, label='高周波帯域')
+    ax.axvline(x=500, color='#2A9D8F', linestyle='--', alpha=0.5, label='Normal (<500Hz)')
+    ax.axvline(x=1000, color='#E9C46A', linestyle='--', alpha=0.5, label='Caution (1kHz)')
+    ax.axvline(x=2000, color='#F4A261', linestyle='--', alpha=0.5, label='High Freq (2kHz)')
     
-    ax.set_xlabel('周波数 (Hz)', fontsize=12)
-    ax.set_ylabel('強度 (正規化)', fontsize=12)
-    ax.set_title('シャント音 周波数スペクトル', fontsize=14, fontweight='bold')
+    ax.set_xlabel('Frequency (Hz)', fontsize=12)
+    ax.set_ylabel('Amplitude (Normalized)', fontsize=12)
+    ax.set_title('Shunt Sound Frequency Spectrum', fontsize=14, fontweight='bold')
     ax.set_xlim(0, 3000)
     ax.set_ylim(0, 1.1)
     ax.legend(loc='upper right', fontsize=9)
